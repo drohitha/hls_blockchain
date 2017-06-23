@@ -340,10 +340,7 @@ func (t *ManagePatient) share_patient(stub shim.ChaincodeStubInterface, args []s
   }
   PatientID := args[0];
   DoctorID := args[1]; 
-  PatientDetails :=  `{`+
-    `"PatientID": "` + PatientID + `" , `+
-    `"DoctorID": "` + DoctorID + `" , `+
-    `}`
+
   DoctorAsBytes, err := stub.GetState(DoctorID)
   if err != nil {
     return nil, errors.New("Failed to get Doctor index")

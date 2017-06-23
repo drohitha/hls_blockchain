@@ -110,7 +110,7 @@ func (t *ManagePatient) Init(stub shim.ChaincodeStubInterface, function string, 
   } else if function == "update_patient" {
     return t.update_patient(stub,args)
   } else if function == "share_patient" {
-    return t.update_patient(stub,args)
+    return t.share_patient(stub,args)
   }  
 
    fmt.Println("invoke did not find func: " + function)          //error
@@ -157,7 +157,7 @@ func (t *ManagePatient) getPatient_byID(stub shim.ChaincodeStubInterface, args [
 func (t *ManagePatient) create_patient(stub shim.ChaincodeStubInterface, args []string) ([]byte, error) {
   var err error
 
-  if len(args) != 6{
+  if len(args) != 7{
     return nil, errors.New("Incorrect number of arguments. Expecting 6")
   }
   fmt.Println("start create_Patient OK")
@@ -194,7 +194,7 @@ func (t *ManagePatient) create_patient(stub shim.ChaincodeStubInterface, args []
     `"Problems": "` + Problems + `" , `+
     `"PatientName": "` + PatientName + `" , `+
     `"Gender": "` + Gender + `" , `+ 
-    `"PatientMobile": "` + PatientMobile + `" `+ 
+    `"PatientMobile": "` + PatientMobile + `" , `+ 
     `"Remarks": "` + Remarks + `" `+ 
     `}`
 
@@ -290,7 +290,7 @@ func (t *ManagePatient) update_patient(stub shim.ChaincodeStubInterface, args []
   PatientMobile := args[5]
 Remarks := args[6]
 
-  if len(args) != 6 {
+  if len(args) != 7 {
     return nil, errors.New("Incorrect number of arguments. Expecting 6.")
   }
   // set PatientID

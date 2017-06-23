@@ -125,7 +125,11 @@ func (t *ManageCareProvider) dupdate_patient(stub shim.ChaincodeStubInterface, a
     
     res.Remarks = args[1]
     }
-  
+        Address := res.Address
+	Problems := res.Problems
+	PatientName := res.PatientName
+	Gender := res.Gender
+	PatientMobile := res.PatientMobile
   
   //build the CreatePatient json string manually
   PatientDetails :=  `{`+
@@ -166,7 +170,7 @@ func (t *ManageCareProvider) get_byPatientID(stub shim.ChaincodeStubInterface, a
 
 func (t *ManageCareProvider) get_byCareProviderID(stub shim.ChaincodeStubInterface, args []string) ([]byte, error){
 var CareProviderIndex []string
-var CareProviderID, jsonResp string
+var CareProviderID, jsonResp, errResp string
   var err error
 fmt.Println("start get_byCareProviderID")
   if len(args) != 1 {

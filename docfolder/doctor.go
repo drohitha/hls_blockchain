@@ -3,7 +3,7 @@ package main
 import (
 "errors"
 "fmt"
-"strconv"
+//"strconv"
 "encoding/json"
 
 "github.com/hyperledger/fabric/core/chaincode/shim"
@@ -214,7 +214,7 @@ fmt.Println("start get_byDoctorID")
   DoctorID = args[0]
   valAsbytes, err := stub.GetState(DoctorID)                  //get the PatientID from chaincode state
   if err != nil {
-    jsonResp = "{\"Error\":\"Failed to get state for " + PatientID + "\"}"
+    jsonResp = "{\"Error\":\"Failed to get state for " + DoctorID + "\"}"
     return nil, errors.New(jsonResp)
   }
   //fmt.Print("valAsbytes : ")

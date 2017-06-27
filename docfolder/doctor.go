@@ -169,7 +169,7 @@ func (t *ManageDoctor) get_byPatientID(stub shim.ChaincodeStubInterface, args []
 }
 
 func (t *ManageDoctor) get_byDoctorID(stub shim.ChaincodeStubInterface, args []string) ([]byte, error){
-var doctorIndex []string
+/*var doctorIndex []string
 var DoctorID, jsonResp, errResp string
   var err error
 fmt.Println("start get_byDoctorID")
@@ -182,6 +182,7 @@ fmt.Println("start get_byDoctorID")
     jsonResp = "{\"Error\":\"Failed to get state for " + DoctorID + "\"}"
     return nil, errors.New(jsonResp)
   }
+
  json.Unmarshal(valAsbytes, &doctorIndex)
  jsonResp = "{"
 	for i,val := range doctorIndex{
@@ -202,5 +203,22 @@ fmt.Println("start get_byDoctorID")
 		
 	jsonResp = jsonResp + "}"
 	fmt.Println("end get_byDoctorID")
-	return []byte(jsonResp), nil
+	return []byte(jsonResp), nil*/
+	 var DoctorID, jsonResp string
+  var err error
+  fmt.Println("start get_byDoctorID")
+  if len(args) != 1 {
+    return nil, errors.New("Incorrect number of arguments. Expecting ID of the patient to query")
+  }
+  // set PatientID
+  DoctorID = args[0]
+  valAsbytes, err := stub.GetState(DoctorID)                  //get the PatientID from chaincode state
+  if err != nil {
+    jsonResp = "{\"Error\":\"Failed to get state for " + PatientID + "\"}"
+    return nil, errors.New(jsonResp)
+  }
+  //fmt.Print("valAsbytes : ")
+  //fmt.Println(valAsbytes)
+  fmt.Println("end get_byDoctorID")
+  return valAsbytes, nil       
 }

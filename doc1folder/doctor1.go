@@ -125,7 +125,11 @@ func (t *ManageDoctor) dupdate_patient(stub shim.ChaincodeStubInterface, args []
     
     res.Remarks = args[1]
     }
-  
+     Address := res.Address
+	Problems := res.Problems
+	PatientName := res.PatientName
+	Gender := res.Gender
+	PatientMobile := res.PatientMobile
   
   //build the CreatePatient json string manually
   PatientDetails :=  `{`+

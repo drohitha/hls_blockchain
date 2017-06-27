@@ -218,7 +218,7 @@ fmt.Println("start get_byDoctorID")
     return nil, errors.New(jsonResp)
   }
   //fmt.Print("valAsbytes : ")
-  //fmt.Println(valAsbytes)
+  fmt.Println(valAsbytes)
   fmt.Println("end get_byDoctorID")
   return valAsbytes, nil       
 }

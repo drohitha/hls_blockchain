@@ -152,14 +152,15 @@ func (t *ManageDoctor) get_byPatientID(stub shim.ChaincodeStubInterface, args []
 	 var PatientID string
   var err error
   fmt.Println("start get_byPatientID")
-  if len(args) != 1 {
+  if len(args) != 2 {
     return nil, errors.New("Incorrect number of arguments. Expecting ID of the patient to query")
   }
   // set PatientID
   PatientID = args[0]
+	PatientHash := args[1]
   function := "getPatient_byID"
-  QueryArgs := util.ToChaincodeArgs(function)
-  valAsbytes, err := stub.QueryChaincode(PatientID, QueryArgs)
+  QueryArgs := util.ToChaincodeArgs(function,PatientID)
+  valAsbytes, err := stub.QueryChaincode(PatientHash, QueryArgs)
   if err != nil {
     errStr := fmt.Sprintf("Error in fetching . Got error: %s", err.Error())
     fmt.Printf(errStr)

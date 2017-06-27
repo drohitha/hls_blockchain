@@ -116,9 +116,9 @@ func (t *ManagePatient) Init(stub shim.ChaincodeStubInterface, function string, 
   } else if function == "share_patient" {
     return t.share_patient(stub,args)
   } else if function == "dupdate_patient" {
-    return t.dupdate_patient(stub,args)
+    return t.dupdate_patient(stub, args)
   } else if function == "cupdate_patient" {
-    return t.cupdate_patient(stub,args)
+    return t.cupdate_patient(stub, args)
   }  
 
    fmt.Println("invoke did not find func: " + function)          //error
@@ -169,7 +169,7 @@ func (t *ManagePatient) getPatient_byID(stub shim.ChaincodeStubInterface, args [
 }
 
 func (t *ManagePatient) getPatient_byEmail(stub shim.ChaincodeStubInterface, args []string) ([]byte, error) {
-  var Patient_Email, jsonResp, errResp string
+  var PatientEmail, jsonResp, errResp string
   var err error
   var valIndex Patient
   fmt.Println("start getPatient_byEmail")
@@ -177,7 +177,7 @@ func (t *ManagePatient) getPatient_byEmail(stub shim.ChaincodeStubInterface, arg
     return nil, errors.New("Incorrect number of arguments. Expecting ID of the patient to query")
   }
   // set PatientID
-   Patient_Email= args[0]
+   PatientEmail= args[0]
   PatientAsBytes, err := stub.GetState(PatientIndexStr)                  //get the PatientID from chaincode state
   if err != nil {
     jsonResp = "{\"Error\":\"Failed to get state for " + Patient_Email + "\"}"
@@ -203,7 +203,7 @@ func (t *ManagePatient) getPatient_byEmail(stub shim.ChaincodeStubInterface, arg
       fmt.Println(err1)
   }
       
-    if valIndex.Patient_Email == Patient_Email{
+    if valIndex.PatientEmail == PatientEmail{
       fmt.Println("Patientfound")
       jsonResp = jsonResp + "\""+ val + "\":" + string(valueAsBytes[:])
       if i < len(PatientIndex)-1 {
@@ -508,7 +508,7 @@ fmt.Println("start get_byCareProviderID")
   return []byte(jsonResp), nil
 }
 
-func (t *ManageInsuranceProvider) get_byInsuranceProviderID(stub shim.ChaincodeStubInterface, args []string) ([]byte, error){
+func (t *ManagePatient) get_byInsuranceProviderID(stub shim.ChaincodeStubInterface, args []string) ([]byte, error){
 var InsuranceProviderIndex []string
 var InsuranceProviderID, jsonResp, errResp string
   var err error
@@ -545,7 +545,7 @@ fmt.Println("start get_byInsuranceProviderID")
   return []byte(jsonResp), nil
 }
 
-func (t *ManageDoctor) dupdate_patient(stub shim.ChaincodeStubInterface, args []string) ([]byte, error) {
+func (t *ManagePatient) dupdate_patient(stub shim.ChaincodeStubInterface, args []string) ([]byte, error) {
   var jsonResp string
   var err error
   fmt.Println("start dupdate_patient")
@@ -603,7 +603,7 @@ func (t *ManageDoctor) dupdate_patient(stub shim.ChaincodeStubInterface, args []
   return nil, nil
 }
 
-func (t *ManageDoctor) cupdate_patient(stub shim.ChaincodeStubInterface, args []string) ([]byte, error) {
+func (t *ManagePatient) cupdate_patient(stub shim.ChaincodeStubInterface, args []string) ([]byte, error) {
   var jsonResp string
   var err error
   fmt.Println("start cupdate_patient")

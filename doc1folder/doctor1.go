@@ -149,7 +149,7 @@ func (t *ManageDoctor) dupdate_patient(stub shim.ChaincodeStubInterface, args []
 }
 
 func (t *ManageDoctor) get_byPatientID(stub shim.ChaincodeStubInterface, args []string) ([]byte, error){
-	 var PatientID, jsonResp string
+	 var PatientID string
   var err error
   fmt.Println("start get_byPatientID")
   if len(args) != 1 {
@@ -173,7 +173,7 @@ func (t *ManageDoctor) get_byPatientID(stub shim.ChaincodeStubInterface, args []
 
 func (t *ManageDoctor) get_byDoctorID(stub shim.ChaincodeStubInterface, args []string) ([]byte, error){
 var doctorIndex []string
-var DoctorID, jsonResp, errResp string
+var DoctorID, jsonResp string
   var err error
 fmt.Println("start get_byDoctorID")
   if len(args) != 1 {

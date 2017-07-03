@@ -363,8 +363,9 @@ func (t *ManagePatient) update_patient(stub shim.ChaincodeStubInterface, args []
   Medications := args[6]
 Remarks := args[7]
 PatientEmail := args[8]
+User := args[9]
 
-  if len(args) != 9 {
+  if len(args) != 10 {
     return nil, errors.New("Incorrect number of arguments. Expecting 9.")
   }
   // set PatientID
@@ -388,6 +389,7 @@ PatientEmail := args[8]
     res.PatientMobile = args[5]
     res.Medications = args[6]
      res.Remarks = args[7]
+    res.User = args[9]
     }
   
   
@@ -401,7 +403,8 @@ PatientEmail := args[8]
     `"PatientMobile": "` + PatientMobile + `" , `+ 
     `"Medications": "` + Medications + `" , `+ 
     `"Remarks": "` + Remarks + `" , `+ 
-    `"PatientEmail": "` + PatientEmail + `" `+
+    `"PatientEmail": "` + PatientEmail + `" , `+
+    `"User": "` + User + `" `+
     `}`
   err = stub.PutState(PatientID, []byte(PatientDetails))                  //store patient with id as key
   if err != nil {
@@ -555,9 +558,9 @@ func (t *ManagePatient) dupdate_patient(stub shim.ChaincodeStubInterface, args [
   PatientID := args[0]
   Medications := args[1]
   Remarks := args[2]
+  User := args[3]
 
-
-  if len(args) != 3 {
+  if len(args) != 4 {
     return nil, errors.New("Incorrect number of arguments. Expecting 3.")
   }
   // set PatientID
@@ -576,6 +579,7 @@ func (t *ManagePatient) dupdate_patient(stub shim.ChaincodeStubInterface, args [
     //fmt.Println(res);
     res.Medications = args[1]
     res.Remarks = args[2]
+    res.User = args[3]
     }
   
 
@@ -596,7 +600,8 @@ func (t *ManagePatient) dupdate_patient(stub shim.ChaincodeStubInterface, args [
     `"PatientMobile": "` + PatientMobile + `" , `+ 
     `"Medications": "` + Medications + `" , `+ 
     `"Remarks": "` + Remarks + `" , `+ 
-    `"PatientEmail": "` + PatientEmail + `" `+
+    `"PatientEmail": "` + PatientEmail + `" , `+
+    `"User": "` + User + `" `+
     `}`
   err = stub.PutState(PatientID, []byte(PatientDetails))                  //store patient with id as key
   if err != nil {
@@ -613,9 +618,9 @@ func (t *ManagePatient) cupdate_patient(stub shim.ChaincodeStubInterface, args [
   PatientID := args[0]
   Medications := args[1]
   Remarks := args[2]
+  User := args[3]
 
-
-  if len(args) != 3 {
+  if len(args) != 4 {
     return nil, errors.New("Incorrect number of arguments. Expecting 3.")
   }
   // set PatientID
@@ -634,6 +639,7 @@ func (t *ManagePatient) cupdate_patient(stub shim.ChaincodeStubInterface, args [
     //fmt.Println(res);
     res.Medications = args[1]
     res.Remarks = args[2]
+    res.User = args[3]
     }
   
 
@@ -654,7 +660,8 @@ func (t *ManagePatient) cupdate_patient(stub shim.ChaincodeStubInterface, args [
     `"PatientMobile": "` + PatientMobile + `" , `+ 
     `"Medications": "` + Medications + `" , `+ 
     `"Remarks": "` + Remarks + `" , `+ 
-    `"PatientEmail": "` + PatientEmail + `" `+
+    `"PatientEmail": "` + PatientEmail + `" , `+
+    `"User": "` + User + `" `+
     `}`
   err = stub.PutState(PatientID, []byte(PatientDetails))                  //store patient with id as key
   if err != nil {
@@ -662,4 +669,3 @@ func (t *ManagePatient) cupdate_patient(stub shim.ChaincodeStubInterface, args [
   }
   return nil, nil
 }
-

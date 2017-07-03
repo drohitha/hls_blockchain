@@ -223,7 +223,7 @@ func (t *ManagePatient) getPatient_byEmail(stub shim.ChaincodeStubInterface, arg
 func (t *ManagePatient) create_patient(stub shim.ChaincodeStubInterface, args []string) ([]byte, error) {
   var err error
 
-  if len(args) != 9{
+  if len(args) != 10{
     return nil, errors.New("Incorrect number of arguments. Expecting 9")
   }
   fmt.Println("start create_Patient OK")

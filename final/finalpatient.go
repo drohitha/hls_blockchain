@@ -23,7 +23,6 @@ import (
 "strconv"
 "encoding/json"
 "strings"
-"github.com/hyperledger/fabric/core/util"
 "github.com/hyperledger/fabric/core/chaincode/shim"
 )
 
@@ -119,9 +118,9 @@ func (t *ManagePatient) Init(stub shim.ChaincodeStubInterface, function string, 
     return t.dupdate_patient(stub, args)
   } else if function == "cupdate_patient" {
     return t.cupdate_patient(stub, args)
-  } else if function == "update_istatus" {
+  }/* else if function == "update_istatus" {
     return t.update_istatus(stub, args)
-  }  
+  }*/
 
    fmt.Println("invoke did not find func: " + function)          //error
   
@@ -420,18 +419,16 @@ User := args[9]
 
 func (t *ManagePatient) share_patient(stub shim.ChaincodeStubInterface, args []string) ([]byte, error) {
  fmt.Println("enter share function")
- if len(args) != 3 {
+ if len(args) != 2 {
     return nil, errors.New("Incorrect number of arguments. Expecting 1")
   }
   PatientID := args[0]
   DoctorID := args[1]
-  Pchain := args[2]
   s := strings.HasPrefix(DoctorID,"ip")
   if s == true {
-    f1 := "update_istatus"
+    /*f1 := "update_istatus"
   invokeArgs2 := util.ToChaincodeArgs(f1, PatientID, "Claimed")
   result2, err := stub.InvokeChaincode(Pchain, invokeArgs2)
-    fmt.Println(result2)
   if err != nil {
     errStr := fmt.Sprintf("Failed to update Transaction status from 'PatientID' chaincode. Got error: %s", err.Error())
     fmt.Printf(errStr)
@@ -439,7 +436,60 @@ func (t *ManagePatient) share_patient(stub shim.ChaincodeStubInterface, args []s
   }
   fmt.Print("Transaction hash returned: ")
   fmt.Println(result2)
-  fmt.Println("Successfully updated istatus to 'Claimed'")
+  fmt.Println("Successfully updated istatus to 'Claimed'")*/
+  var jsonResp string
+  var err error
+  fmt.Println("start update_istatus")
+  /*if len(args) != 2 {
+    return nil, errors.New("Incorrect number of arguments. Expecting 3.")
+  }*/
+  // set vesselID
+  //PatientID := args[0]
+  PatientAsBytes, err := stub.GetState(PatientID)                  //get the Berth for the specified vesselID from chaincode state
+  if err != nil {
+    jsonResp = "{\"Error\":\"Failed to get state for " + PatientID + "\"}"
+    return nil, errors.New(jsonResp)
+  }
+  //fmt.Print("berthAsBytes in update berth")
+  //fmt.Println(berthAsBytes);
+  res := Patient{}
+  json.Unmarshal(PatientAsBytes, &res)
+  if res.PatientID == PatientID{
+    fmt.Println("Patient found with PatientID : " + PatientID)
+    if res.IStatus == "Claimed"{
+      return nil, errors.New("Insurance already shared and claimed")
+    }
+    res.IStatus = "Claimed"
+  
+  }
+  Address := res.Address
+  Problems := res.Problems
+  PatientName:= res.PatientName
+  Gender := res.Gender
+  PatientMobile := res.PatientMobile
+  PatientEmail := res.PatientEmail
+  Medications := res.Medications
+  Remarks := res.Remarks
+  User := res.User
+  IStatus := res.IStatus
+  //build the Berth json string manually
+  PatientDetails :=  `{`+
+    `"PatientID": "` + PatientID + `" , `+
+    `"Address": "` + Address + `" , `+
+    `"Problems": "` + Problems + `" , `+
+    `"PatientName": "` + PatientName + `" , `+
+    `"Gender": "` + Gender + `" , `+ 
+    `"PatientMobile": "` + PatientMobile + `" , `+ 
+    `"Medications": "` + Medications + `" , `+ 
+    `"Remarks": "` + Remarks + `" , `+ 
+    `"PatientEmail": "` + PatientEmail + `" , `+
+    `"User": "` + User + `" , `+
+    `"IStatus": "` + IStatus + `" `+
+    `}`
+  err = stub.PutState(PatientID, []byte(PatientDetails))                 //store Berth with id as key
+  if err != nil {
+    return nil, err
+  }
   }
   /*PatientDetails :=  `{`+
     `"PatientID": "` + PatientID + `" , `+
@@ -694,7 +744,7 @@ func (t *ManagePatient) cupdate_patient(stub shim.ChaincodeStubInterface, args [
   }
   return nil, nil
 }
-func (t *ManagePatient) update_istatus(stub shim.ChaincodeStubInterface, args []string) ([]byte, error) {
+/*func (t *ManagePatient) update_istatus(stub shim.ChaincodeStubInterface, args []string) ([]byte, error) {
   var jsonResp string
   var err error
   fmt.Println("start update_istatus")
@@ -714,7 +764,7 @@ func (t *ManagePatient) update_istatus(stub shim.ChaincodeStubInterface, args []
   json.Unmarshal(PatientAsBytes, &res)
   if res.PatientID == PatientID{
     fmt.Println("Patient found with PatientID : " + PatientID)
-    if res.IStatus == "Claimed"{
+    if res.IStatus == Claimed{
       return nil, errors.New("Insurance already shared and claimed")
     }
     res.IStatus = args[1]
@@ -729,7 +779,7 @@ func (t *ManagePatient) update_istatus(stub shim.ChaincodeStubInterface, args []
   Medications := res.Medications
   Remarks := res.Remarks
   User := res.User
-  IStatus := args[1]
+  
   //build the Berth json string manually
   PatientDetails :=  `{`+
     `"PatientID": "` + PatientID + `" , `+
@@ -749,4 +799,4 @@ func (t *ManagePatient) update_istatus(stub shim.ChaincodeStubInterface, args []
     return nil, err
   }
   return nil, nil
-}
+}*/

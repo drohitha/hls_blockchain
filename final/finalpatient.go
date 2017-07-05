@@ -6,9 +6,7 @@ regarding copyright ownership.  The ASF licenses this file
 to you under the Apache License, Version 2.0 (the
 "License"); you may not use this file except in compliance
 with the License.  You may obtain a copy of the License at
-
   http://www.apache.org/licenses/LICENSE-2.0
-
 Unless required by applicable law or agreed to in writing,
 software distributed under the License is distributed on an
 "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
@@ -24,7 +22,7 @@ import (
 "fmt"
 "strconv"
 "encoding/json"
-
+"strings"
 "github.com/hyperledger/fabric/core/chaincode/shim"
 )
 
@@ -49,7 +47,8 @@ type Patient struct{             // Attributes of a Patient
   Medications string `json:"Medications"`
   Remarks string `json: "Remarks"`
   PatientEmail string `json: "PatientEmail"`
-
+  User string `json: "User"`
+  IStatus string `json: "IStatus"`
   }
 // ============================================================================================================================
 // Main - start the chaincode for Create Patient
@@ -119,6 +118,8 @@ func (t *ManagePatient) Init(stub shim.ChaincodeStubInterface, function string, 
     return t.dupdate_patient(stub, args)
   } else if function == "cupdate_patient" {
     return t.cupdate_patient(stub, args)
+  } else if function == "update_istatus" {
+    return t.update_istatus(stub, args)
   }  
 
    fmt.Println("invoke did not find func: " + function)          //error
@@ -223,7 +224,7 @@ func (t *ManagePatient) getPatient_byEmail(stub shim.ChaincodeStubInterface, arg
 func (t *ManagePatient) create_patient(stub shim.ChaincodeStubInterface, args []string) ([]byte, error) {
   var err error
 
-  if len(args) != 9{
+  if len(args) != 11{
     return nil, errors.New("Incorrect number of arguments. Expecting 9")
   }
   fmt.Println("start create_Patient OK")
@@ -237,6 +238,8 @@ func (t *ManagePatient) create_patient(stub shim.ChaincodeStubInterface, args []
   Medications := args[6]
   Remarks := args[7]
   PatientEmail := args[8]
+  User := args[9]
+  IStatus := args[10]
   
   //fmt.Println("start create_Patient 1")
   PatientAsBytes, err := stub.GetState(PatientID)
@@ -265,7 +268,9 @@ func (t *ManagePatient) create_patient(stub shim.ChaincodeStubInterface, args []
     `"PatientMobile": "` + PatientMobile + `" , `+ 
     `"Medications": "` + Medications + `" , `+ 
     `"Remarks": "` + Remarks + `" , `+ 
-    `"PatientEmail": "` + PatientEmail + `" `+
+    `"PatientEmail": "` + PatientEmail + `" , `+
+    `"User": "` + User + `" , `+
+    `"IStatus": "` + IStatus + `" `+
     `}`
 
 
@@ -361,8 +366,9 @@ func (t *ManagePatient) update_patient(stub shim.ChaincodeStubInterface, args []
   Medications := args[6]
 Remarks := args[7]
 PatientEmail := args[8]
+User := args[9]
 
-  if len(args) != 9 {
+  if len(args) != 10 {
     return nil, errors.New("Incorrect number of arguments. Expecting 9.")
   }
   // set PatientID
@@ -386,8 +392,9 @@ PatientEmail := args[8]
     res.PatientMobile = args[5]
     res.Medications = args[6]
      res.Remarks = args[7]
+    res.User = args[9]
     }
-  
+     IStatus := res.IStatus
   
   //build the CreatePatient json string manually
   PatientDetails :=  `{`+
@@ -399,7 +406,9 @@ PatientEmail := args[8]
     `"PatientMobile": "` + PatientMobile + `" , `+ 
     `"Medications": "` + Medications + `" , `+ 
     `"Remarks": "` + Remarks + `" , `+ 
-    `"PatientEmail": "` + PatientEmail + `" `+
+    `"PatientEmail": "` + PatientEmail + `" , `+
+    `"User": "` + User + `" , `+
+    `"IStatus": "` + IStatus + `" `+
     `}`
   err = stub.PutState(PatientID, []byte(PatientDetails))                  //store patient with id as key
   if err != nil {
@@ -410,11 +419,26 @@ PatientEmail := args[8]
 
 func (t *ManagePatient) share_patient(stub shim.ChaincodeStubInterface, args []string) ([]byte, error) {
  fmt.Println("enter share function")
- if len(args) != 2 {
+ if len(args) != 3 {
     return nil, errors.New("Incorrect number of arguments. Expecting 1")
   }
-  PatientID := args[0];
-  DoctorID := args[1]; 
+  PatientID := args[0]
+  DoctorID := args[1]
+  Pchain := args[2]
+  s := strings.HasPrefix(DoctorID,"ip")
+  if s == true {
+    f1 := "update_istatus"
+  invokeArgs2 := util.ToChaincodeArgs(f1, PatientID, "Claimed")
+  result2, err := stub.InvokeChaincode(Pchain, invokeArgs2)
+  if err != nil {
+    errStr := fmt.Sprintf("Failed to update Transaction status from 'PatientID' chaincode. Got error: %s", err.Error())
+    fmt.Printf(errStr)
+    return nil, errors.New(errStr)
+  }
+  fmt.Print("Transaction hash returned: ")
+  fmt.Println(result2)
+  fmt.Println("Successfully updated istatus to 'Claimed'")
+  }
   /*PatientDetails :=  `{`+
     `"PatientID": "` + PatientID + `" , `+
     `"DoctorID": "` + DoctorID + `" , `+
@@ -553,9 +577,9 @@ func (t *ManagePatient) dupdate_patient(stub shim.ChaincodeStubInterface, args [
   PatientID := args[0]
   Medications := args[1]
   Remarks := args[2]
+  User := args[3]
 
-
-  if len(args) != 3 {
+  if len(args) != 4 {
     return nil, errors.New("Incorrect number of arguments. Expecting 3.")
   }
   // set PatientID
@@ -574,6 +598,7 @@ func (t *ManagePatient) dupdate_patient(stub shim.ChaincodeStubInterface, args [
     //fmt.Println(res);
     res.Medications = args[1]
     res.Remarks = args[2]
+    res.User = args[3]
     }
   
 
@@ -583,6 +608,7 @@ func (t *ManagePatient) dupdate_patient(stub shim.ChaincodeStubInterface, args [
   Gender := res.Gender
   PatientMobile := res.PatientMobile
   PatientEmail := res.PatientEmail
+  IStatus := res.IStatus
   
   //build the CreatePatient json string manually
   PatientDetails :=  `{`+
@@ -594,7 +620,9 @@ func (t *ManagePatient) dupdate_patient(stub shim.ChaincodeStubInterface, args [
     `"PatientMobile": "` + PatientMobile + `" , `+ 
     `"Medications": "` + Medications + `" , `+ 
     `"Remarks": "` + Remarks + `" , `+ 
-    `"PatientEmail": "` + PatientEmail + `" `+
+    `"PatientEmail": "` + PatientEmail + `" , `+
+    `"User": "` + User + `" , `+
+    `"IStatus": "` + IStatus + `" `+
     `}`
   err = stub.PutState(PatientID, []byte(PatientDetails))                  //store patient with id as key
   if err != nil {
@@ -611,9 +639,9 @@ func (t *ManagePatient) cupdate_patient(stub shim.ChaincodeStubInterface, args [
   PatientID := args[0]
   Medications := args[1]
   Remarks := args[2]
+  User := args[3]
 
-
-  if len(args) != 3 {
+  if len(args) != 4 {
     return nil, errors.New("Incorrect number of arguments. Expecting 3.")
   }
   // set PatientID
@@ -632,6 +660,7 @@ func (t *ManagePatient) cupdate_patient(stub shim.ChaincodeStubInterface, args [
     //fmt.Println(res);
     res.Medications = args[1]
     res.Remarks = args[2]
+    res.User = args[3]
     }
   
 
@@ -641,6 +670,7 @@ func (t *ManagePatient) cupdate_patient(stub shim.ChaincodeStubInterface, args [
   Gender := res.Gender
   PatientMobile := res.PatientMobile
   PatientEmail := res.PatientEmail
+  IStatus := res.IStatus
   
   //build the CreatePatient json string manually
   PatientDetails :=  `{`+
@@ -652,7 +682,9 @@ func (t *ManagePatient) cupdate_patient(stub shim.ChaincodeStubInterface, args [
     `"PatientMobile": "` + PatientMobile + `" , `+ 
     `"Medications": "` + Medications + `" , `+ 
     `"Remarks": "` + Remarks + `" , `+ 
-    `"PatientEmail": "` + PatientEmail + `" `+
+    `"PatientEmail": "` + PatientEmail + `" , `+
+    `"User": "` + User + `" , `+
+    `"IStatus": "` + IStatus + `" `+
     `}`
   err = stub.PutState(PatientID, []byte(PatientDetails))                  //store patient with id as key
   if err != nil {
@@ -660,4 +692,59 @@ func (t *ManagePatient) cupdate_patient(stub shim.ChaincodeStubInterface, args [
   }
   return nil, nil
 }
-
+func (t *ManagePatient) update_istatus(stub shim.ChaincodeStubInterface, args []string) ([]byte, error) {
+  var jsonResp string
+  var err error
+  fmt.Println("start update_istatus")
+  if len(args) != 2 {
+    return nil, errors.New("Incorrect number of arguments. Expecting 3.")
+  }
+  // set vesselID
+  PatientID := args[0]
+  PatientAsBytes, err := stub.GetState(PatientID)                  //get the Berth for the specified vesselID from chaincode state
+  if err != nil {
+    jsonResp = "{\"Error\":\"Failed to get state for " + PatientID + "\"}"
+    return nil, errors.New(jsonResp)
+  }
+  //fmt.Print("berthAsBytes in update berth")
+  //fmt.Println(berthAsBytes);
+  res := Patient{}
+  json.Unmarshal(PatientAsBytes, &res)
+  if res.PatientID == PatientID{
+    fmt.Println("Patient found with PatientID : " + PatientID)
+    if res.IStatus == Claimed{
+      return nil, errors.New("Insurance already shared and claimed")
+    }
+    res.IStatus = args[1]
+  
+  }
+  Address := res.Address
+  Problems := res.Problems
+  PatientName:= res.PatientName
+  Gender := res.Gender
+  PatientMobile := res.PatientMobile
+  PatientEmail := res.PatientEmail
+  Medications := res.Medications
+  Remarks := res.Remarks
+  User := res.User
+  
+  //build the Berth json string manually
+  PatientDetails :=  `{`+
+    `"PatientID": "` + PatientID + `" , `+
+    `"Address": "` + Address + `" , `+
+    `"Problems": "` + Problems + `" , `+
+    `"PatientName": "` + PatientName + `" , `+
+    `"Gender": "` + Gender + `" , `+ 
+    `"PatientMobile": "` + PatientMobile + `" , `+ 
+    `"Medications": "` + Medications + `" , `+ 
+    `"Remarks": "` + Remarks + `" , `+ 
+    `"PatientEmail": "` + PatientEmail + `" , `+
+    `"User": "` + User + `" , `+
+    `"IStatus": "` + IStatus + `" `+
+    `}`
+  err = stub.PutState(PatientID, []byte(PatientDetails))                 //store Berth with id as key
+  if err != nil {
+    return nil, err
+  }
+  return nil, nil
+}

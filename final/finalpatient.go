@@ -431,6 +431,7 @@ func (t *ManagePatient) share_patient(stub shim.ChaincodeStubInterface, args []s
     f1 := "update_istatus"
   invokeArgs2 := util.ToChaincodeArgs(f1, PatientID, "Claimed")
   result2, err := stub.InvokeChaincode(Pchain, invokeArgs2)
+    fmt.Println(result2)
   if err != nil {
     errStr := fmt.Sprintf("Failed to update Transaction status from 'PatientID' chaincode. Got error: %s", err.Error())
     fmt.Printf(errStr)

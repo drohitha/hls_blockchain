@@ -23,6 +23,7 @@ import (
 "strconv"
 "encoding/json"
 "strings"
+"github.com/hyperledger/fabric/core/util"
 "github.com/hyperledger/fabric/core/chaincode/shim"
 )
 
@@ -712,7 +713,7 @@ func (t *ManagePatient) update_istatus(stub shim.ChaincodeStubInterface, args []
   json.Unmarshal(PatientAsBytes, &res)
   if res.PatientID == PatientID{
     fmt.Println("Patient found with PatientID : " + PatientID)
-    if res.IStatus == Claimed{
+    if res.IStatus == "Claimed"{
       return nil, errors.New("Insurance already shared and claimed")
     }
     res.IStatus = args[1]
@@ -727,7 +728,7 @@ func (t *ManagePatient) update_istatus(stub shim.ChaincodeStubInterface, args []
   Medications := res.Medications
   Remarks := res.Remarks
   User := res.User
-  
+  IStatus := args[1]
   //build the Berth json string manually
   PatientDetails :=  `{`+
     `"PatientID": "` + PatientID + `" , `+

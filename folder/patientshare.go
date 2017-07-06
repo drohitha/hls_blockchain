@@ -769,9 +769,9 @@ func (t *ManagePatient) update_istatus(stub shim.ChaincodeStubInterface, args []
   json.Unmarshal(PatientAsBytes, &res)
   if res.PatientID == PatientID{
     fmt.Println("Patient found with PatientID : " + PatientID)
-    /*if res.IStatus == "Claimed"{
-      return nil, errors.New("Insurance already shared and claimed")
-    }*/
+    if res.IStatus != "Claim Initiated"{
+      return nil, errors.New("claim already approved or rejected once")
+    }
     res.IStatus = args[1]
   
   }

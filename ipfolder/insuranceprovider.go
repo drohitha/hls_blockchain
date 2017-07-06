@@ -153,6 +153,7 @@ func (t *ManageInsuranceProvider) update_istatus(stub shim.ChaincodeStubInterfac
 		fmt.Printf(errStr)
 		return nil, errors.New(errStr)
 	}
+	fmt.Printf(patientAsBytes)
 	return nil,nil
 }
 

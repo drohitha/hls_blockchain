@@ -147,13 +147,13 @@ func (t *ManageInsuranceProvider) update_istatus(stub shim.ChaincodeStubInterfac
     IStatus := args[2]
 	f1 := "update_istatus"
 	queryArgs1 := util.ToChaincodeArgs(f1, PatientID,IStatus)
-	patientAsBytes, err := stub.InvokeChaincode(PatientChaincode, queryArgs1)
+	_, err := stub.InvokeChaincode(PatientChaincode, queryArgs1)
 	if err != nil {
 		errStr := fmt.Sprintf("Failed to query chaincode. Got error: %s", err.Error())
 		fmt.Printf(errStr)
 		return nil, errors.New(errStr)
 	}
-	fmt.Printf(patientAsBytes)
+	
 	return nil,nil
 }
 

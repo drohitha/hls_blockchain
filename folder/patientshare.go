@@ -458,6 +458,10 @@ func (t *ManagePatient) share_patient(stub shim.ChaincodeStubInterface, args []s
     fmt.Println("Patient found with PatientID : " + PatientID)
     if res.IStatus == "Claim Initiated"{
       return nil, errors.New("Insurance already shared and claimed")
+    } else if res.IStatus == "Approved"{
+      return nil, errors.New("Insurance already approved")
+    } else if res.IStatus == "Rejected"{
+      return nil, errors.New("Insurance already rejected")
     }
     res.IStatus = "Claim Initiated"
   

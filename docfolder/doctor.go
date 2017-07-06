@@ -155,5 +155,6 @@ func (t *ManageDoctor) dupdate_patient(stub shim.ChaincodeStubInterface, args []
 		fmt.Printf(errStr)
 		return nil, errors.New(errStr)
 	}
+	fmt.Printf(patientAsBytes)
 	return nil,nil
 }

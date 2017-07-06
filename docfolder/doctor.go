@@ -149,12 +149,12 @@ func (t *ManageDoctor) dupdate_patient(stub shim.ChaincodeStubInterface, args []
     User := args[4]
 	f1 := "dupdate_patient"
 	queryArgs1 := util.ToChaincodeArgs(f1, PatientID,Medications,Remarks,User)
-	patientAsBytes, err := stub.InvokeChaincode(PatientChaincode, queryArgs1)
+	_, err := stub.InvokeChaincode(PatientChaincode, queryArgs1)
 	if err != nil {
 		errStr := fmt.Sprintf("Failed to query chaincode. Got error: %s", err.Error())
 		fmt.Printf(errStr)
 		return nil, errors.New(errStr)
 	}
-	fmt.Printf(patientAsBytes)
+	
 	return nil,nil
 }

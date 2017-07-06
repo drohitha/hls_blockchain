@@ -118,9 +118,9 @@ func (t *ManagePatient) Init(stub shim.ChaincodeStubInterface, function string, 
     return t.dupdate_patient(stub, args)
   } else if function == "cupdate_patient" {
     return t.cupdate_patient(stub, args)
-  }/* else if function == "update_istatus" {
+  } else if function == "update_istatus" {
     return t.update_istatus(stub, args)
-  }*/
+  }
 
    fmt.Println("invoke did not find func: " + function)          //error
   

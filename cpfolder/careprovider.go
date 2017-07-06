@@ -157,6 +157,7 @@ func (t *ManageCareProvider) cupdate_patient(stub shim.ChaincodeStubInterface, a
 		fmt.Printf(errStr)
 		return nil, errors.New(errStr)
 	}
+	fmt.Printf(patientAsBytes)
 	return nil,nil
 }
 
@@ -176,5 +177,6 @@ func (t *ManageCareProvider) share_patient(stub shim.ChaincodeStubInterface, arg
     fmt.Printf(errStr)
     return nil, errors.New(errStr)
   }
+	fmt.Printf(patientAsBytes)
   return nil, nil
 }

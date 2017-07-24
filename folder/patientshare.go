@@ -163,10 +163,13 @@ func (t *ManagePatient) getPatient_byID(stub shim.ChaincodeStubInterface, args [
   var DIndex []string
   json.Unmarshal(valAsbytes1, &DIndex)
   for _,val := range DIndex{
-    if val == Name{
+    if val== PatientID{
       valAsbytes, err := stub.GetState(PatientID)                  //get the PatientID from chaincode state
   if err != nil {
     jsonResp = "{\"Error\":\"Failed to get state for " + PatientID + "\"}"
+    //err1 = json.Unmarshal(valueAsBytes, &valIndex)
+    //if err1 != nil {
+      //fmt.Println(err1)
     return nil, errors.New(jsonResp)
   }
   //fmt.Print("valAsbytes : ")

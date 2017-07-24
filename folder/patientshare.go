@@ -599,6 +599,7 @@ fmt.Println("start get_byDoctorID")
   fmt.Println("end get_byDoctorID")
   return []byte(jsonResp), nil
   }
+  return nil,errors.New("unidentified")
 }
 
 func (t *ManagePatient) get_byCareProviderID(stub shim.ChaincodeStubInterface, args []string) ([]byte, error){

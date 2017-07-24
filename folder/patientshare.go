@@ -558,7 +558,7 @@ func (t *ManagePatient) share_patient(stub shim.ChaincodeStubInterface, args []s
 func (t *ManagePatient) get_byDoctorID(stub shim.ChaincodeStubInterface, args []string) ([]byte, error){
   var doctorIndex []string
 var DoctorID, jsonResp, errResp string
-  var err error
+  
 fmt.Println("start get_byDoctorID")
   if len(args) != 2 {
     return nil, errors.New("Incorrect number of arguments. Expecting ID of the doctor to query")

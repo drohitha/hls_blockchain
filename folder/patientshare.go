@@ -165,6 +165,8 @@ func (t *ManagePatient) getPatient_byID(stub shim.ChaincodeStubInterface, args [
   }
   //fmt.Print("valAsbytes : ")
   //fmt.Println(valAsbytes)
+  fmt.Println(t);
+  fmt.Println(t.name);
   fmt.Println("end getPatient_byID")
   return valAsbytes, nil                          //send it onward
 }

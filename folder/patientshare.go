@@ -151,7 +151,7 @@ func (t *ManagePatient) Query(stub shim.ChaincodeStubInterface, function string,
 //============================================================================================================================
 func (t *ManagePatient) getPatient_byID(stub shim.ChaincodeStubInterface, args []string) ([]byte, error) {
   var PatientID, jsonResp string
-  var err error
+  
   fmt.Println("start getPatient_byID")
   if len(args) != 2 {
     return nil, errors.New("Incorrect number of arguments. Expecting ID of the patient to query")
@@ -162,7 +162,7 @@ func (t *ManagePatient) getPatient_byID(stub shim.ChaincodeStubInterface, args [
   valAsbytes1, err := stub.GetState(Name)
   var DIndex []string
   json.Unmarshal(valAsbytes1, &DIndex)
-  for i,val := range DIndex{
+  for _,val := range DIndex{
     if val == Name{
       valAsbytes, err := stub.GetState(PatientID)                  //get the PatientID from chaincode state
   if err != nil {

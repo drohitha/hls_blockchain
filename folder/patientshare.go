@@ -560,10 +560,18 @@ func (t *ManagePatient) get_byDoctorID(stub shim.ChaincodeStubInterface, args []
 var DoctorID, jsonResp, errResp string
   var err error
 fmt.Println("start get_byDoctorID")
-  if len(args) != 1 {
+  if len(args) != 2 {
     return nil, errors.New("Incorrect number of arguments. Expecting ID of the doctor to query")
   }
  DoctorID = args[0]
+  Name := args[1]
+  if Name==DoctorID{
+  
+  
+  
+  
+  
+  
  valAsbytes, err := stub.GetState(DoctorID)
  if err != nil {
     jsonResp = "{\"Error\":\"Failed to get state for " + DoctorID + "\"}"
@@ -590,6 +598,7 @@ fmt.Println("start get_byDoctorID")
   jsonResp = jsonResp + "}"
   fmt.Println("end get_byDoctorID")
   return []byte(jsonResp), nil
+  }
 }
 
 func (t *ManagePatient) get_byCareProviderID(stub shim.ChaincodeStubInterface, args []string) ([]byte, error){

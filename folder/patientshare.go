@@ -159,7 +159,7 @@ func (t *ManagePatient) getPatient_byID(stub shim.ChaincodeStubInterface, args [
   // set PatientID
   PatientID = args[0]
   Name := args[1]
-  valAsbytes1 := stub.GetState(Name)
+  valAsbytes1, _ := stub.GetState(Name)
   var DIndex []string
   json.Unmarshal(valAsbytes1, &DIndex)
   for _,val := range DIndex{

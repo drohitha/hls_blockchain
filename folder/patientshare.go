@@ -153,22 +153,61 @@ func (t *ManagePatient) getPatient_byID(stub shim.ChaincodeStubInterface, args [
   var PatientID, jsonResp string
   var err error
   fmt.Println("start getPatient_byID")
-  if len(args) != 1 {
+  if len(args) != 2 {
     return nil, errors.New("Incorrect number of arguments. Expecting ID of the patient to query")
   }
   // set PatientID
   PatientID = args[0]
-  valAsbytes, err := stub.GetState(PatientID)                  //get the PatientID from chaincode state
+  Name := args[1]
+  valAsbytes1, err := stub.GetState(Name)
+  var DIndex []string
+  json.Unmarshal(valAsbytes1, &DIndex)
+  for i,val := range DIndex{
+    if val == Name{
+      valAsbytes, err := stub.GetState(PatientID)                  //get the PatientID from chaincode state
   if err != nil {
     jsonResp = "{\"Error\":\"Failed to get state for " + PatientID + "\"}"
     return nil, errors.New(jsonResp)
   }
   //fmt.Print("valAsbytes : ")
   //fmt.Println(valAsbytes)
-  fmt.Println(t);
-  fmt.Println(t.name);
+  //fmt.Println(t);
+  //fmt.Println(t.name);
   fmt.Println("end getPatient_byID")
-  return valAsbytes, nil                          //send it onward
+  return valAsbytes, nil  
+    }
+  }
+  return nil,errors.New("unidentified")
+    //fmt.Println(strconv.Itoa(i) + " - looking at " + val + " for getPatient_byID")
+    //valueAsBytes, err := stub.GetState(val)
+   // if err != nil {
+     // errResp = "{\"Error\":\"Failed to get state for " + val + "\"}"
+      //return nil, errors.New(errResp)
+    //}
+  
+    //var err1 error
+    //err1 = json.Unmarshal(valueAsBytes, &valIndex)
+    //if err1 != nil {
+      //fmt.Println(err1)
+  //}
+      
+    //if valIndex.PatientEmail == PatientEmail{
+     // fmt.Println("Patientfound")
+     // jsonResp = jsonResp + "\""+ val + "\":" + string(valueAsBytes[:])
+      //if i < len(PatientIndex)-1 {
+      //  jsonResp = jsonResp + ","
+     // }}}
+  //valAsbytes, err := stub.GetState(PatientID)                  //get the PatientID from chaincode state
+  //if err != nil {
+    //jsonResp = "{\"Error\":\"Failed to get state for " + PatientID + "\"}"
+   // return nil, errors.New(jsonResp)
+  //}
+  //fmt.Print("valAsbytes : ")
+  //fmt.Println(valAsbytes)
+  //fmt.Println(t);
+  //fmt.Println(t.name);
+  //fmt.Println("end getPatient_byID")
+ // return valAsbytes, nil                          //send it onward
 }
 
 func (t *ManagePatient) getPatient_byEmail(stub shim.ChaincodeStubInterface, args []string) ([]byte, error) {

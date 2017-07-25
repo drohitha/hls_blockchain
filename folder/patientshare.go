@@ -163,17 +163,11 @@ func (t *ManagePatient) getPatient_byID(stub shim.ChaincodeStubInterface, args [
         return nil, errors.New("Couldn't get attribute " + ". Error: " + err.Error())
     }
   fmt.Println(attr)
-  var K []string
-  err4 := json.Unmarshal(attr,&K)
-  fmt.Println(err4)
-  fmt.Println(K)
-  //Name := args[1]
-  //valAsbytes1, _ := stub.GetState(Name)
-  //var DIndex []string
-  //json.Unmarshal(valAsbytes1, &DIndex)
- // for _,val := range DIndex{
-   // if val== PatientID{
-     valAsbytes, err := stub.GetState(PatientID)                  //get the PatientID from chaincode state
+  as := string(attr)
+  fmt.Println(as)
+  if as=="Software Staff"
+  {
+    valAsbytes, err := stub.GetState(PatientID)                  //get the PatientID from chaincode state
   if err != nil {
     jsonResp = "{\"Error\":\"Failed to get state for " + PatientID + "\"}"
     //err1 = json.Unmarshal(valueAsBytes, &valIndex)
@@ -186,7 +180,16 @@ func (t *ManagePatient) getPatient_byID(stub shim.ChaincodeStubInterface, args [
   //fmt.Println(t);
   //fmt.Println(t.name);
   fmt.Println("end getPatient_byID")
-  return valAsbytes, nil  
+  return valAsbytes, nil
+  }
+  
+  //Name := args[1]
+  //valAsbytes1, _ := stub.GetState(Name)
+  //var DIndex []string
+  //json.Unmarshal(valAsbytes1, &DIndex)
+ // for _,val := range DIndex{
+   // if val== PatientID{
+       
     //}
  // }
  // return nil,errors.New("unidentified")
@@ -219,7 +222,9 @@ func (t *ManagePatient) getPatient_byID(stub shim.ChaincodeStubInterface, args [
   //fmt.Println(t);
   //fmt.Println(t.name);
   //fmt.Println("end getPatient_byID")
- // return valAsbytes, nil                          //send it onward
+ // return valAsbytes, nil  
+  //send it onward
+  return nil,errors.New("de")
 }
 
 func (t *ManagePatient) getPatient_byEmail(stub shim.ChaincodeStubInterface, args []string) ([]byte, error) {

@@ -158,7 +158,7 @@ func (t *ManagePatient) getPatient_byID(stub shim.ChaincodeStubInterface, args [
   }
   // set PatientID
   PatientID = args[0]
-  attr, err := stub.ReadCertAttribute("admin")
+  attr, err := stub.ReadCertAttribute("username")
   if err != nil {
         return nil, errors.New("Couldn't get attribute " + ". Error: " + err.Error())
     }

@@ -229,7 +229,7 @@ func (t *ManagePatient) getPatient_byID(stub shim.ChaincodeStubInterface, args [
 
 func (t *ManagePatient) getPatient_byEmail(stub shim.ChaincodeStubInterface, args []string) ([]byte, error) {
   var PatientEmail, jsonResp, errResp string
-  var err error
+ 
   var valIndex Patient
   fmt.Println("start getPatient_byEmail")
   if len(args) != 1 {

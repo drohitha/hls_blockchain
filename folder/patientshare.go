@@ -165,8 +165,7 @@ func (t *ManagePatient) getPatient_byID(stub shim.ChaincodeStubInterface, args [
   fmt.Println(attr)
   as := string(attr)
   fmt.Println(as)
-  if as=="Software Staff"
-  {
+  if as=="Software Staff" {
     valAsbytes, err := stub.GetState(PatientID)                  //get the PatientID from chaincode state
   if err != nil {
     jsonResp = "{\"Error\":\"Failed to get state for " + PatientID + "\"}"

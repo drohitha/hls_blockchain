@@ -164,7 +164,7 @@ func (t *ManagePatient) getPatient_byID(stub shim.ChaincodeStubInterface, args [
     }
   fmt.Println(attr)
   var K string
-  json.unmarshal(attr,&K)
+  json.Unmarshal(attr,&K)
   fmt.Println(K)
   //Name := args[1]
   //valAsbytes1, _ := stub.GetState(Name)

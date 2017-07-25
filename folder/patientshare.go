@@ -1,3 +1,4 @@
+
 /*/*
 Licensed to the Apache Software Foundation (ASF) under one
 or more contributor license agreements.  See the NOTICE file
@@ -235,8 +236,17 @@ func (t *ManagePatient) getPatient_byEmail(stub shim.ChaincodeStubInterface, arg
     return nil, errors.New("Incorrect number of arguments. Expecting ID of the patient to query")
   }
   // set PatientID
-   PatientEmail= args[0]
-  PatientAsBytes, err := stub.GetState(PatientIndexStr)                  //get the PatientID from chaincode state
+   PatientEmail = args[0]
+    attr, err5 := stub.ReadCertAttribute("id")
+  if err5 != nil {
+        return nil, errors.New("Couldn't get attribute " + ". Error: " + err5.Error())
+    }
+  fmt.Println(attr)
+  as := string(attr)
+  fmt.Println(as)
+  if as==PatientEmail {
+
+    PatientAsBytes, err := stub.GetState(PatientIndexStr)                  //get the PatientID from chaincode state
   if err != nil {
     jsonResp = "{\"Error\":\"Failed to get state for " + PatientEmail + "\"}"
     return nil, errors.New(jsonResp)
@@ -275,6 +285,14 @@ func (t *ManagePatient) getPatient_byEmail(stub shim.ChaincodeStubInterface, arg
   //fmt.Println([]byte(jsonResp))
   fmt.Println("end getby patientemail")
   return []byte(jsonResp), nil 
+
+  }
+
+
+
+   return nil,errors.New("er")
+
+  
 }
 //create patient
 //========================================================================================================================

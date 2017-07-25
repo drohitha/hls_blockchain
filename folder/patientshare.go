@@ -153,18 +153,23 @@ func (t *ManagePatient) getPatient_byID(stub shim.ChaincodeStubInterface, args [
   var PatientID, jsonResp string
   
   fmt.Println("start getPatient_byID")
-  if len(args) != 2 {
+  if len(args) != 1 {
     return nil, errors.New("Incorrect number of arguments. Expecting ID of the patient to query")
   }
   // set PatientID
   PatientID = args[0]
-  Name := args[1]
-  valAsbytes1, _ := stub.GetState(Name)
-  var DIndex []string
-  json.Unmarshal(valAsbytes1, &DIndex)
-  for _,val := range DIndex{
-    if val== PatientID{
-      valAsbytes, err := stub.GetState(PatientID)                  //get the PatientID from chaincode state
+  attr, err := stub.ReadCertAttribute("admin")
+  if err != nil {
+        return "", errors.New("Couldn't get attribute " + attributeName + ". Error: " + err.Error())
+    }
+  fmt.Println(attr)
+  //Name := args[1]
+  //valAsbytes1, _ := stub.GetState(Name)
+  //var DIndex []string
+  //json.Unmarshal(valAsbytes1, &DIndex)
+ // for _,val := range DIndex{
+   // if val== PatientID{
+     valAsbytes, err := stub.GetState(PatientID)                  //get the PatientID from chaincode state
   if err != nil {
     jsonResp = "{\"Error\":\"Failed to get state for " + PatientID + "\"}"
     //err1 = json.Unmarshal(valueAsBytes, &valIndex)
@@ -178,9 +183,9 @@ func (t *ManagePatient) getPatient_byID(stub shim.ChaincodeStubInterface, args [
   //fmt.Println(t.name);
   fmt.Println("end getPatient_byID")
   return valAsbytes, nil  
-    }
-  }
-  return nil,errors.New("unidentified")
+    //}
+ // }
+ // return nil,errors.New("unidentified")
     //fmt.Println(strconv.Itoa(i) + " - looking at " + val + " for getPatient_byID")
     //valueAsBytes, err := stub.GetState(val)
    // if err != nil {

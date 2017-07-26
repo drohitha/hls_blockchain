@@ -123,14 +123,14 @@ func (t *ManageDoctor) getPatient_byID(stub shim.ChaincodeStubInterface, args []
 	return nil,nil
 }
 func (t *ManageDoctor) get_byDoctorID(stub shim.ChaincodeStubInterface, args []string) ([]byte, error) {
-	if len(args) != 3 {
+	if len(args) != 2 {
 		return nil, errors.New("Incorrect number of arguments. Expecting 3 args")
 	}
 	PatientChaincode := args[0]
 	DoctorID := args[1]
-	Name := args[2]
+	//Name := args[2]
 	f1 := "get_byDoctorID"
-	queryArgs1 := util.ToChaincodeArgs(f1, DoctorID, Name)
+	queryArgs1 := util.ToChaincodeArgs(f1, DoctorID)
 	patientAsBytes, err := stub.QueryChaincode(PatientChaincode, queryArgs1)
 	if err != nil {
 		errStr := fmt.Sprintf("Failed to query chaincode. Got error: %s", err.Error())

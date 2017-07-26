@@ -642,7 +642,7 @@ fmt.Println("start get_byDoctorID")
 func (t *ManagePatient) get_byCareProviderID(stub shim.ChaincodeStubInterface, args []string) ([]byte, error){
   var CareProviderIndex []string
 var CareProviderID, jsonResp, errResp string
-  var err error
+
 fmt.Println("start get_byCareProviderID")
   if len(args) != 1 {
     return nil, errors.New("Incorrect number of arguments. Expecting ID of the CareProvider to query")
@@ -688,8 +688,7 @@ fmt.Println("start get_byCareProviderID")
 func (t *ManagePatient) get_byInsuranceProviderID(stub shim.ChaincodeStubInterface, args []string) ([]byte, error){
 var InsuranceProviderIndex []string
 var InsuranceProviderID, jsonResp, errResp string
-  var err error
-fmt.Println("start get_byInsuranceProviderID")
+ fmt.Println("start get_byInsuranceProviderID")
   if len(args) != 1 {
     return nil, errors.New("Incorrect number of arguments. Expecting ID of the InsuranceProvider to query")
   }

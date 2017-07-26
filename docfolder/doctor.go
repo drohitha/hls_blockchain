@@ -123,7 +123,7 @@ func (t *ManageDoctor) getPatient_byID(stub shim.ChaincodeStubInterface, args []
 	return nil,nil
 }
 func (t *ManageDoctor) get_byDoctorID(stub shim.ChaincodeStubInterface, args []string) ([]byte, error) {
-	if len(args) != 2 {
+	if len(args) != 1 {
 		return nil, errors.New("Incorrect number of arguments. Expecting 3 args")
 	}
 	PatientChaincode := args[0]

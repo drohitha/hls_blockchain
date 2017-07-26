@@ -237,14 +237,7 @@ func (t *ManagePatient) getPatient_byEmail(stub shim.ChaincodeStubInterface, arg
   }
   // set PatientID
    PatientEmail = args[0]
-    attr, err5 := stub.ReadCertAttribute("id")
-  if err5 != nil {
-        return nil, errors.New("Couldn't get attribute " + ". Error: " + err5.Error())
-    }
-  fmt.Println(attr)
-  as := string(attr)
-  fmt.Println(as)
-  if as==PatientEmail {
+    
 
     PatientAsBytes, err := stub.GetState(PatientIndexStr)                  //get the PatientID from chaincode state
   if err != nil {
@@ -290,10 +283,7 @@ func (t *ManagePatient) getPatient_byEmail(stub shim.ChaincodeStubInterface, arg
 
 
 
-   return nil,errors.New("er")
-
-  
-}
+   
 //create patient
 //========================================================================================================================
 func (t *ManagePatient) create_patient(stub shim.ChaincodeStubInterface, args []string) ([]byte, error) {
@@ -599,15 +589,7 @@ fmt.Println("start get_byDoctorID")
   }
  DoctorID = args[0]
   //Name := args[1]
- attr, err5 := stub.ReadCertAttribute("id")
-  if err5 != nil {
-        return nil, errors.New("Couldn't get attribute " + ". Error: " + err5.Error())
-    }
-  fmt.Println(attr)
-  as := string(attr)
-  fmt.Println(as)
-  
-  if as==DoctorID{
+ 
   
  valAsbytes, err := stub.GetState(DoctorID)
  if err != nil {
@@ -636,8 +618,7 @@ fmt.Println("start get_byDoctorID")
   fmt.Println("end get_byDoctorID")
   return []byte(jsonResp), nil
   }
-  return nil,errors.New("unidentified")
-}
+  
 
 func (t *ManagePatient) get_byCareProviderID(stub shim.ChaincodeStubInterface, args []string) ([]byte, error){
   var CareProviderIndex []string
@@ -648,14 +629,7 @@ fmt.Println("start get_byCareProviderID")
     return nil, errors.New("Incorrect number of arguments. Expecting ID of the CareProvider to query")
   }
  CareProviderID = args[0]
-  attr, err5 := stub.ReadCertAttribute("id")
-  if err5 != nil {
-        return nil, errors.New("Couldn't get attribute " + ". Error: " + err5.Error())
-    }
-  fmt.Println(attr)
-  as := string(attr)
-  fmt.Println(as)
-  if as==CareProviderID {
+  
   valAsbytes, err := stub.GetState(CareProviderID)
  if err != nil {
     jsonResp = "{\"Error\":\"Failed to get state for " + CareProviderID + "\"}"
@@ -683,8 +657,7 @@ fmt.Println("start get_byCareProviderID")
   fmt.Println("end get_byCareProviderID")
   return []byte(jsonResp), nil
 }
- return nil,errors.New("unidentified")
-}
+ 
 func (t *ManagePatient) get_byInsuranceProviderID(stub shim.ChaincodeStubInterface, args []string) ([]byte, error){
 var InsuranceProviderIndex []string
 var InsuranceProviderID, jsonResp, errResp string
@@ -693,14 +666,7 @@ var InsuranceProviderID, jsonResp, errResp string
     return nil, errors.New("Incorrect number of arguments. Expecting ID of the InsuranceProvider to query")
   }
  InsuranceProviderID = args[0]
- attr, err5 := stub.ReadCertAttribute("id")
-  if err5 != nil {
-        return nil, errors.New("Couldn't get attribute " + ". Error: " + err5.Error())
-    }
-  fmt.Println(attr)
-  as := string(attr)
-  fmt.Println(as)
-  if as==InsuranceProviderID{
+ 
   valAsbytes, err := stub.GetState(InsuranceProviderID)
  if err != nil {
     jsonResp = "{\"Error\":\"Failed to get state for " + InsuranceProviderID + "\"}"
@@ -728,8 +694,7 @@ var InsuranceProviderID, jsonResp, errResp string
   fmt.Println("end get_byInsuranceProviderID")
   return []byte(jsonResp), nil
 }
-  return nil,errors.New("unidentified")
-}
+  
 
 func (t *ManagePatient) dupdate_patient(stub shim.ChaincodeStubInterface, args []string) ([]byte, error) {
   var jsonResp string

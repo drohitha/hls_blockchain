@@ -591,7 +591,7 @@ fmt.Println("start get_byDoctorID")
   //Name := args[1]
  
   
- valAsbytes, err := stub.GetState(DoctorIndexStr)
+ valAsbytes, err := stub.GetState(PatientIndexStr)
  if err != nil {
     jsonResp = "{\"Error\":\"Failed to get state for " + DoctorID + "\"}"
     return nil, errors.New(jsonResp)

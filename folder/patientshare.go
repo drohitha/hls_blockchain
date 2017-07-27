@@ -609,12 +609,16 @@ fmt.Println("start get_byDoctorID")
       jsonResp = jsonResp + "\""+ val + "\":" + string(valueAsBytes[:])
       //fmt.Println("jsonResp inside if")
       //fmt.Println(jsonResp)
-      //if i < len(doctorIndex)-1 {
-       // jsonResp = jsonResp + ","
-     // }
+      if i < len(doctorIndex)-1 {
+        jsonResp = jsonResp + ","
+      }
     }
     
   jsonResp = jsonResp + "}"
+  if strings.Contains(jsonResp, "},}"){
+		fmt.Println("in if for jsonResp contains wrong json")	
+		jsonResp = strings.Replace(jsonResp, "},}", "}}", -1)
+	}
   fmt.Println("end get_byDoctorID")
   return []byte(jsonResp), nil
   }

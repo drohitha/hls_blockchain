@@ -575,9 +575,9 @@ func (t *ManagePatient) share_patient(stub shim.ChaincodeStubInterface, args []s
   err = stub.PutState(DoctorID, jsonAsBytes)            //store name of Patient
   if err != nil {
     return nil, err
-  }
-  return nil, nil*/
-}
+  }*/
+  return nil, nil
+ }
 
 func (t *ManagePatient) get_byDoctorID(stub shim.ChaincodeStubInterface, args []string) ([]byte, error){
   var doctorIndex []string

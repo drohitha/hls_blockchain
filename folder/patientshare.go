@@ -488,8 +488,8 @@ func (t *ManagePatient) share_patient(stub shim.ChaincodeStubInterface, args []s
     return nil, errors.New("Incorrect number of arguments. Expecting 1")
   }
   PatientID := args[0]
- // DoctorID := args[1]
-  s := strings.HasPrefix(PatientID,"ip")
+ DoctorID := args[1]
+  s := strings.HasPrefix(DoctorID,"ip")
  if s == true {
     /*f1 := "update_istatus"
   invokeArgs2 := util.ToChaincodeArgs(f1, PatientID, "Claimed")

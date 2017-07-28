@@ -489,7 +489,7 @@ func (t *ManagePatient) share_patient(stub shim.ChaincodeStubInterface, args []s
   }
   PatientID := args[0]
  // DoctorID := args[1]
- // s := strings.HasPrefix(DoctorID,"ip")
+  s := strings.HasPrefix(PatientID,"ip")
 //  if s == true {
     /*f1 := "update_istatus"
   invokeArgs2 := util.ToChaincodeArgs(f1, PatientID, "Claimed")
@@ -559,7 +559,7 @@ func (t *ManagePatient) share_patient(stub shim.ChaincodeStubInterface, args []s
   if err != nil {
     return nil, err
   }
-// }
+}
   /*PatientDetails :=  `{`+
     `"PatientID": "` + PatientID + `" , `+
     `"DoctorID": "` + DoctorID + `" , `+

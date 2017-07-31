@@ -592,13 +592,13 @@ fmt.Println("start get_byDoctorID")
   if len(args) != 1 {
     return nil, errors.New("Incorrect number of arguments. Expecting ID of the doctor to query")
   }
- ID = args[0]
+ DoctorID = args[0]
   //Name := args[1]
  
   
  valAsbytes, err := stub.GetState(PatientIndexStr)
  if err != nil {
-    jsonResp = "{\"Error\":\"Failed to get state for " + ID + "\"}"
+    jsonResp = "{\"Error\":\"Failed to get state for " + DoctorID + "\"}"
     return nil, errors.New(jsonResp)
   }
  json.Unmarshal(valAsbytes, &doctorIndex)

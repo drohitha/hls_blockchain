@@ -564,7 +564,7 @@ func (t *ManagePatient) share_patient(stub shim.ChaincodeStubInterface, args []s
     `"PatientID": "` + PatientID + `" , `+
     `"DoctorID": "` + DoctorID + `" , `+
     `}`*/
-	console.log(DoctorID)
+	console.log(DoctorID);
 	DoctorAsBytes, err := stub.GetState(DoctorID)   ///updated codehere
 	
 if err != nil {
@@ -572,7 +572,7 @@ if err != nil {
   }
   var DoctorIndex []string
   json.Unmarshal(DoctorAsBytes, &DoctorIndex)
-console.log(DoctorIndex)   
+console.log(DoctorIndex);  
 DoctorIndex = append(DoctorIndex, PatientID)
    jsonAsBytes, _ := json.Marshal(DoctorIndex)
   err = stub.PutState(DoctorID, jsonAsBytes)            //store name of Patient

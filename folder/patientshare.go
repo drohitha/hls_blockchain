@@ -573,7 +573,7 @@ if err != nil {
   var DoctorIndex []string
   json.Unmarshal(DoctorAsBytes, &DoctorIndex)
 fmt.Println("enter doctor index", DoctorIndex)
-	console.log();  
+//	console.log();  
 DoctorIndex = append(DoctorIndex, PatientID)
    jsonAsBytes, _ := json.Marshal(DoctorIndex)
   err = stub.PutState(DoctorID, jsonAsBytes)            //store name of Patient

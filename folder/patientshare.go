@@ -585,7 +585,7 @@ DoctorIndex = append(DoctorIndex, PatientID)
 
 func (t *ManagePatient) get_byDoctorID(stub shim.ChaincodeStubInterface, args []string) ([]byte, error){
   var doctorIndex []string
-var DoctorID, jsonResp, errResp string
+var doctorID, jsonResp, errResp string
   
 fmt.Println("start get_byDoctorID")
   if len(args) != 1 {

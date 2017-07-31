@@ -168,9 +168,9 @@ func (t *ManageCareProvider) share_patient(stub shim.ChaincodeStubInterface, arg
   }
   PatientChaincode := args[0]
   PatientID := args[1]
-  DoctorID := args[2]
+  ID := args[2]
   f1 := "share_patient"
- queryArgs1 := util.ToChaincodeArgs(f1, PatientID,DoctorID)
+ queryArgs1 := util.ToChaincodeArgs(f1, PatientID,ID)
  // queryArgs1 := util.ToChaincodeArgs(f1, PatientID)
 _, err := stub.InvokeChaincode(PatientChaincode, queryArgs1)
   if err != nil {

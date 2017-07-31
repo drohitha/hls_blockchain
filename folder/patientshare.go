@@ -576,7 +576,7 @@ fmt.Println("enter doctor index", DoctorIndex)
 //	console.log();  
 DoctorIndex = append(DoctorIndex, PatientID)
    jsonAsBytes, _ := json.Marshal(DoctorIndex)
-  err = stub.PutState(ID, jsonAsBytes)            //store name of Patient
+  err = stub.PutState(DoctorID, jsonAsBytes)            //store name of Patient
   if err != nil {
     return nil, err
   }

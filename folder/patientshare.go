@@ -488,8 +488,8 @@ func (t *ManagePatient) share_patient(stub shim.ChaincodeStubInterface, args []s
     return nil, errors.New("Incorrect number of arguments. Expecting 1")
   }
   PatientID := args[0]
- ID := args[1]
-  s := strings.HasPrefix(ID,"ip")
+ DoctorID := args[1]
+  s := strings.HasPrefix(DoctorID,"ip")
  if s == true {
     /*f1 := "update_istatus"
   invokeArgs2 := util.ToChaincodeArgs(f1, PatientID, "Claimed")
@@ -564,8 +564,8 @@ func (t *ManagePatient) share_patient(stub shim.ChaincodeStubInterface, args []s
     `"PatientID": "` + PatientID + `" , `+
     `"DoctorID": "` + DoctorID + `" , `+
     `}`*/
-	fmt.Println("the id is ",ID);
-	DoctorAsBytes, err := stub.GetState(ID)   ///updated codehere
+	fmt.Println("the id is ",DoctorID);
+	DoctorAsBytes, err := stub.GetState(DoctorID)   ///updated codehere
 	
 if err != nil {
     return nil, errors.New("Failed to get Doctor index")
@@ -591,13 +591,13 @@ fmt.Println("start get_byDoctorID")
   if len(args) != 1 {
     return nil, errors.New("Incorrect number of arguments. Expecting ID of the doctor to query")
   }
- DoctorID = args[0]
+ ID = args[0]
   //Name := args[1]
  
   
  valAsbytes, err := stub.GetState(PatientIndexStr)
  if err != nil {
-    jsonResp = "{\"Error\":\"Failed to get state for " + DoctorID + "\"}"
+    jsonResp = "{\"Error\":\"Failed to get state for " + ID + "\"}"
     return nil, errors.New(jsonResp)
   }
  json.Unmarshal(valAsbytes, &doctorIndex)

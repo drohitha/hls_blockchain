@@ -586,7 +586,7 @@ DoctorIndex = append(DoctorIndex, PatientID)
 
 func (t *ManagePatient) get_byDoctorID(stub shim.ChaincodeStubInterface, args []string) ([]byte, error){
   var doctorIndex []string
-var ID, jsonResp, errResp string
+var DoctorID, jsonResp, errResp string
   
 fmt.Println("start get_byDoctorID")
   if len(args) != 1 {
@@ -596,7 +596,8 @@ fmt.Println("start get_byDoctorID")
   //Name := args[1]
  
   
- valAsbytes, err := stub.GetState(PatientIndexStr)
+// valAsbytes, err := stub.GetState(PatientIndexStr)
+	valAsbytes, err := stub.GetState(DoctorID)
  if err != nil {
     jsonResp = "{\"Error\":\"Failed to get state for " + DoctorID + "\"}"
     return nil, errors.New(jsonResp)

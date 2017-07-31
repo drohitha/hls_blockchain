@@ -488,8 +488,8 @@ func (t *ManagePatient) share_patient(stub shim.ChaincodeStubInterface, args []s
     return nil, errors.New("Incorrect number of arguments. Expecting 1")
   }
   PatientID := args[0]
- DoctorID := args[1]
-  s := strings.HasPrefix(DoctorID,"ip")
+ ID := args[1]
+  s := strings.HasPrefix(ID,"ip")
  if s == true {
     /*f1 := "update_istatus"
   invokeArgs2 := util.ToChaincodeArgs(f1, PatientID, "Claimed")
@@ -564,7 +564,7 @@ func (t *ManagePatient) share_patient(stub shim.ChaincodeStubInterface, args []s
     `"PatientID": "` + PatientID + `" , `+
     `"DoctorID": "` + DoctorID + `" , `+
     `}`*/
-	fmt.Println("the id is ",DoctorID);
+	fmt.Println("the id is ",ID);
 	DoctorAsBytes, err := stub.GetState(DoctorID)   ///updated codehere
 	
 if err != nil {
@@ -576,7 +576,7 @@ fmt.Println("enter doctor index", DoctorIndex)
 //	console.log();  
 DoctorIndex = append(DoctorIndex, PatientID)
    jsonAsBytes, _ := json.Marshal(DoctorIndex)
-  err = stub.PutState(DoctorID, jsonAsBytes)            //store name of Patient
+  err = stub.PutState(ID, jsonAsBytes)            //store name of Patient
   if err != nil {
     return nil, err
   }

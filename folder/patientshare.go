@@ -326,9 +326,9 @@ func (t *ManagePatient) create_patient(stub shim.ChaincodeStubInterface, args []
      //build the CreatePatient json string manually
       PatientDetails :=  `{`+
     `"PatientID": "` + PatientID + `" , `+
+    `"PatientName": "` + PatientName + `" , `+ 
     `"Address": "` + Address + `" , `+
     `"Problems": "` + Problems + `" , `+
-    `"PatientName": "` + PatientName + `" , `+
     `"Gender": "` + Gender + `" , `+ 
     `"PatientMobile": "` + PatientMobile + `" , `+ 
     `"Medications": "` + Medications + `" , `+ 
@@ -423,15 +423,15 @@ func (t *ManagePatient) update_patient(stub shim.ChaincodeStubInterface, args []
   fmt.Println("start update_patient")
 
   PatientID := args[0]
-  Address := args[1]
-  Problems := args[2]
-  PatientName:= args[3]
+  PatientName:= args[1]  
+  Address := args[2]
+  Problems := args[3]
   Gender := args[4]
   PatientMobile := args[5]
   Medications := args[6]
-Remarks := args[7]
-PatientEmail := args[8]
-User := args[9]
+  Remarks := args[7]
+  PatientEmail := args[8]
+  User := args[9]
 
   if len(args) != 10 {
     return nil, errors.New("Incorrect number of arguments. Expecting 9.")
@@ -450,23 +450,23 @@ User := args[9]
   if res.PatientID == PatientID{
     fmt.Println("Patient found with PatientID : " + PatientID)
     //fmt.Println(res);
-    res.Address = args[1]
-    res.Problems  = args[2]
-    res.PatientName = args[3]
-    res.Gender = args[4]
-    res.PatientMobile = args[5]
-    res.Medications = args[6]
-     res.Remarks = args[7]
-    res.User = args[9]
+  res.PatientName = args[1]  
+  res.Address = args[2]
+  res.Problems  = args[3]
+  res.Gender = args[4]
+  res.PatientMobile = args[5]
+  res.Medications = args[6]
+  res.Remarks = args[7]
+  res.User = args[9]
     }
      IStatus := res.IStatus
   
   //build the CreatePatient json string manually
-  PatientDetails :=  `{`+
+ PatientDetails :=  `{`+
     `"PatientID": "` + PatientID + `" , `+
+    `"PatientName": "` + PatientName + `" , `+ 
     `"Address": "` + Address + `" , `+
     `"Problems": "` + Problems + `" , `+
-    `"PatientName": "` + PatientName + `" , `+
     `"Gender": "` + Gender + `" , `+ 
     `"PatientMobile": "` + PatientMobile + `" , `+ 
     `"Medications": "` + Medications + `" , `+ 

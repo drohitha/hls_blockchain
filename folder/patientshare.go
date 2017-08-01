@@ -295,9 +295,9 @@ func (t *ManagePatient) create_patient(stub shim.ChaincodeStubInterface, args []
   fmt.Println("start create_Patient OK")
 
   PatientID := args[0]
+  PatientName:= args[1]
   Address := args[2]
   Problems := args[3]
-  PatientName:= args[1]
   Gender := args[4]
   PatientMobile := args[5]
   Medications := args[6]

@@ -615,9 +615,9 @@ fmt.Println("start get_byDoctorID")
       jsonResp = jsonResp + "\""+ val + "\":" + string(valueAsBytes[:])
       //fmt.Println("jsonResp inside if")
       //fmt.Println(jsonResp)
-      if i < len(doctorIndex)-1 {
-        jsonResp = jsonResp + ","
-      }
+     // if i < len(doctorIndex)-1 {              //updated code here 
+     //   jsonResp = jsonResp + ","
+      //}
     }
     
   jsonResp = jsonResp + "}"

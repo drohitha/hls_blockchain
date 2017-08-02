@@ -458,7 +458,8 @@ func (t *ManagePatient) update_patient(stub shim.ChaincodeStubInterface, args []
   res.Medications = args[6]
   res.Remarks = args[7]
    //res.User = args[9]
-    }
+  User := res.User 
+  }
 	User := res.User
      IStatus := res.IStatus
   
